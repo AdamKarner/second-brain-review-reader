@@ -1,0 +1,10 @@
+{
+  "draft_revision": "V3-01",
+  "inputs_sha256": "b5738017319a8fbecdbfda57bd04071fdfb55ab3567ee0ccb60620a1782d904c",
+  "gold_sha256": "4e2b762318ee23cef5b3f0865d39abd3b1b324febd1adb89f12f39c76f930dd0",
+  "ciphertext_sha256": "65ecf63522eb5978cd84ade50dbc263146e9436fd1f19154ed47435f813a6707",
+  "ciphertext_bytes": 311385,
+  "candidate_sha": "0f4166a4e38b9b0a6e03326e576ca9f13500c859",
+  "gold_review": "PENDING_INDEPENDENT_OWNER_REVIEW",
+  "private_inference_executed": false
+}

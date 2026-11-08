@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-zFOU11eN0Oy51aMpneoM3UdkrkNmZvzklzhDEnsIhNc='; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer"><title>Second Brain · Owner review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f1;color:#152b27;font:17px/1.55 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:24px 18px 64px}h1{font-size:30px;line-height:1.15}h2{font-size:22px}h3{font-size:17px;margin-bottom:6px}small,.muted{color:#55635f}section{padding:20px;background:white;border:1px solid #d9ded9;border-radius:16px;margin:18px 0}button{min-height:48px;font:inherit;border:0;border-radius:10px;padding:11px 16px;background:#174f44;color:white;margin:6px 0;cursor:pointer;width:100%}button.secondary{background:#e6efeb;color:#174f44}.download{display:block;text-align:center;text-decoration:none;min-height:48px;padding:12px 16px;background:#174f44;color:#fff;border-radius:10px;margin:12px 0}.actions{display:flex;gap:10px}.actions button:last-child{background:#74392c}input[type=text],textarea{width:100%;font:inherit;padding:12px;border:1px solid #a6b6af;border-radius:8px}input[type=file]{max-width:100%;margin:10px 0}label{display:block;margin:12px 0}fieldset{min-width:0;border:1px solid #b6c9bf;border-radius:10px;padding:12px;margin:14px 0}legend{font-size:16px;padding:0 5px}fieldset label{display:inline-flex;align-items:center;justify-content:center;width:46%;min-height:48px;border:1px solid #a6b6af;border-radius:8px;margin:5px 2%;gap:8px}fieldset label:has(input:checked){background:#dceee4}input[type=radio]{width:22px;height:22px}input[type=checkbox]{width:22px;height:22px;vertical-align:middle;margin-right:8px}.source{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3ef;border-radius:10px;padding:16px}#message{padding:12px;border-left:3px solid #377762}#progress{font-variant-numeric:tabular-nums}details{margin:10px 0}footer{font-size:14px;color:#55635f}[hidden]{display:none!important}
+</style></head><body><main>
+<small>SECOND BRAIN · PRIVATE EVALUATION</small><h1>Review on your phone</h1><p><strong>Draft V3-01 · Independent gold review required</strong></p>
+<p>The page contains no private cases. Your browser decrypts an approved bundle on your device. Private keys stay in this browser.</p>
+<section><h2>Fresh v3 evaluation</h2><p>No private predictions have been run. Review all proposed labels and all listed equivalent exact spans. Earlier R2 approvals do not apply to this set.</p><p>Use your existing phone identity. Your R2 review remains at the original page.</p></section><button id="demo" class="secondary">Try a public sample</button>
+<details id="optional-review-controls" open><summary>Independent v3 gold review</summary><section><h2>1. Request access</h2><label>Your reviewer name<input id="reviewer" type="text" autocomplete="name"></label>
+<label><input id="independent" type="checkbox">I am the owner and authorize myself as the independent human reviewer. I authored neither the candidate nor these cases.</label>
+<button id="create">Create public access request</button><p class="muted">Only the access request contains public keys. Send it to Codex when asked. Use the same browser for the encrypted bundle; clearing browser data removes your private keys.</p></section>
+<section><h2>2. Review fresh v3 gold</h2><a id="download-bundle" class="download" href="bundles/review-bundle-v3-01.encrypted.json" download="review-bundle-v3-01.encrypted.json">Download encrypted v3 gold bundle</a><p class="muted">Save the file, select it below, then decrypt. Use the same browser that created your phone key.</p><label>Select the approved encrypted file<input id="bundle" type="file" accept="application/json,.json"></label><button id="open">Decrypt on this phone</button></section></details>
+<p id="message" role="status" aria-live="polite">Review each fresh v3 case once, then sign and export the encrypted review. Any rejected label blocks inference.</p>
+<section id="review" hidden><small id="review-title"></small><h2 id="progress"></h2><div id="case"><h3>Question</h3><p id="question"></p><h3>Exact source</h3><div id="source" class="source"></div><div id="prediction" hidden><h3>Actual system decision</h3><strong id="prediction-status"></strong><p id="prediction-quote" class="source"></p><p class="muted">Compare this decision with the question and exact source. Make each judgment yourself.</p></div><div id="gold-reference"><h3>Author-proposed gold</h3><p id="expected"></p><details><summary>Author rationale — verify independently</summary><p id="rationale"></p></details></div><div id="judgments" hidden></div><label>Private note<textarea id="note" rows="3"></textarea></label><p id="gold-prompt">Does the proposed answer or abstention follow from the exact source, entity, field, time and condition?</p><div id="gold-actions" class="actions"><button id="yes">Yes, accept</button><button id="no">No, reject</button></div><button id="save-prediction" hidden>Save judgments and next</button></div><button id="finish" hidden>Sign and download encrypted review</button></section>
+<footer>Source version: phone-review-v3-01 · No external dependencies or network requests. Any rejected gold blocks inference. This reader does not execute models or authorize release.</footer>
+</main><script>'use strict';
+// Public client only. No private cases, network calls, telemetry or third-party code.
+const EXPECTED = Object.freeze({
+  inputs_sha256: 'b5738017319a8fbecdbfda57bd04071fdfb55ab3567ee0ccb60620a1782d904c',
+  gold_sha256: '4e2b762318ee23cef5b3f0865d39abd3b1b324febd1adb89f12f39c76f930dd0'
+});
+const PREDICTION_SHA = null;
+const JUDGMENTS = Object.freeze({
+  supported: 'Support: the emitted answer follows from the source; for ABSTAIN, no unsupported factual answer was emitted.',
+  disposition_valid: 'Decision: ANSWER or ABSTAIN is appropriate for this question and source.',
+  source_fresh: 'Time: no outdated or unverified information is presented as a current fact.',
+  scope_valid: 'Scope: no answer is given for the wrong person, item, field or condition.',
+  evidence_span_checked: 'Evidence: I checked the exact quotation against the source, or confirmed that ABSTAIN emitted no quotation.'
+});
+const $ = id => document.getElementById(id);
+const encoder = new TextEncoder();
+const bytes = text => Uint8Array.from(atob(text), c => c.charCodeAt(0));
+const b64 = buffer => btoa(Array.from(new Uint8Array(buffer), b => String.fromCharCode(b)).join(''));
+const hex = buffer => Array.from(new Uint8Array(buffer), b => b.toString(16).padStart(2, '0')).join('');
+const sha = async text => hex(await crypto.subtle.digest('SHA-256', encoder.encode(text)));
+const pem = buffer => '-----BEGIN PUBLIC KEY-----\n' + b64(buffer).match(/.{1,64}/g).join('\n') + '\n-----END PUBLIC KEY-----\n';
+let identity, state, position = 0;
+
+async function db() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('second-brain-owner-review-v1', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('local');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(new Error('Local storage unavailable'));
+  });
+}
+async function saved(key) {
+  const connection = await db();
+  return new Promise((resolve, reject) => {
+    const tx = connection.transaction('local', 'readonly');
+    const request = tx.objectStore('local').get(key);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(new Error('Local read failed'));
+    tx.oncomplete = () => connection.close();
+  });
+}
+async function save(key, value) {
+  const connection = await db();
+  return new Promise((resolve, reject) => {
+    const tx = connection.transaction('local', 'readwrite');
+    tx.objectStore('local').put(value, key);
+    tx.oncomplete = () => { connection.close(); resolve(); };
+    tx.onerror = () => reject(new Error('Local save failed'));
+  });
+}
+function download(name, content, type = 'application/json') {
+  const url = URL.createObjectURL(new Blob([content], {type}));
+  const link = document.createElement('a'); link.href = url; link.download = name;
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+function message(text) { $('message').textContent = text; }
+function guarded(fn) {
+  return async () => {
+    try { await fn(); }
+    catch (_) { message('Stopped safely. Check the file, storage and browser support. No review was finalized.'); }
+  };
+}
+async function createAccess() {
+  if (!$('independent').checked || $('reviewer').value.trim().length < 2)
+    throw new Error('Reviewer declaration required');
+  const reviewer = $('reviewer').value.trim();
+  if (/^(atlas|claude|codex)$/i.test(reviewer)) throw new Error('Own human name required');
+  identity = await saved('identity');
+  if (identity && identity.reviewer !== reviewer) throw new Error('Existing reviewer identity differs');
+  if (!identity) {
+    const encryption = await crypto.subtle.generateKey({name: 'RSA-OAEP', modulusLength: 3072,
+      publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256'}, false, ['encrypt', 'decrypt']);
+    const signing = await crypto.subtle.generateKey({name: 'Ed25519'}, false, ['sign', 'verify']);
+    identity = {reviewer, encryption, signing, created_at_utc: new Date().toISOString()};
+    await save('identity', identity);
+  }
+  const encryptionSpki = await crypto.subtle.exportKey('spki', identity.encryption.publicKey);
+  const signingSpki = await crypto.subtle.exportKey('spki', identity.signing.publicKey);
+  download('review-access-request.json', JSON.stringify({format: 'SB-REVIEW-ACCESS-1',
+    reviewer: identity.reviewer, encryption_public_key_pem: pem(encryptionSpki),
+    review_public_key_pem: pem(signingSpki), expected_commitments: EXPECTED}, null, 2) + '\n');
+  message('Access request downloaded. It contains public keys only and can be sent to Codex. Keep using this browser; private keys stay on this phone.');
+}
+function index(rows) {
+  if (!Array.isArray(rows)) throw new Error('Expected array');
+  const map = new Map();
+  for (const row of rows) {
+    if (!row || typeof row.id !== 'string' || !row.id || map.has(row.id)) throw new Error('Invalid ID');
+    map.set(row.id, row);
+  }
+  return map;
+}
+async function validatePayload(payload, expected = EXPECTED) {
+  if (await sha(payload.inputs_json) !== expected.inputs_sha256 || await sha(payload.gold_json) !== expected.gold_sha256)
+    throw new Error('Commitments differ');
+  const cases = JSON.parse(payload.inputs_json), gold = index(JSON.parse(payload.gold_json));
+  const byId = index(cases);
+  if (cases.length !== 200 || gold.size !== 200 || cases.some(c => !gold.has(c.id))) throw new Error('Coverage mismatch');
+  let answerable = 0;
+  for (const c of cases) {
+    const g = gold.get(c.id);
+    if (typeof c.source !== 'string' || typeof c.question !== 'string' || typeof g.answerable !== 'boolean')
+      throw new Error('Invalid case');
+    answerable += Number(g.answerable);
+    if (!Array.isArray(g.expected_answers) || Boolean(g.expected_answers.length) !== g.answerable)
+      throw new Error('Gold shape differs');
+    for (const a of g.expected_answers) {
+      if (!Number.isInteger(a.start) || !Number.isInteger(a.end) || a.start < 0 || a.end <= a.start ||
+          a.end > c.source.length || c.source.slice(a.start, a.end) !== a.text)
+        throw new Error('Exact source span differs');
+    }
+  }
+  if (answerable !== 100) throw new Error('Balance differs');
+  return {cases, gold: Array.from(gold.values()), commitments: expected};
+}
+async function validatePredictions(payload, checked, predictionSha = PREDICTION_SHA) {
+  if (await sha(payload.predictions_json) !== predictionSha) throw new Error('Prediction digest differs');
+  const predictions = JSON.parse(payload.predictions_json), mapped = index(predictions);
+  if (mapped.size !== checked.cases.length) throw new Error('Prediction coverage differs');
+  for (const c of checked.cases) {
+    const p = mapped.get(c.id);
+    if (!p || !['ANSWER', 'ABSTAIN'].includes(p.status)) throw new Error('Invalid prediction');
+    if (p.status === 'ANSWER') {
+      if (p.source_id !== c.source_id || !Number.isInteger(p.start) || !Number.isInteger(p.end) ||
+          p.start < 0 || p.end <= p.start || p.end > c.source.length) throw new Error('Invalid source span');
+      if (await sha(c.source) !== p.source_sha256 || await sha(c.source.slice(p.start, p.end)) !== p.quotation_sha256)
+        throw new Error('Prediction source binding differs');
+    }
+  }
+  return predictions;
+}
+async function openBundle() {
+  identity = await saved('identity');
+  const file = $('bundle').files[0];
+  if (!identity || !file || file.size > 12000000) throw new Error('Key and bundle required');
+  const envelope = JSON.parse(await file.text());
+  if (envelope.draft_revision !== 'V3-01' || envelope.format !== 'SB-REVIEW-ENCRYPTED-1') throw new Error('Fresh v3 gold only');
+  const phase = envelope.format === 'SB-PREDICTION-ENCRYPTED-1' ? 'predictions' : 'gold';
+  if (!['SB-REVIEW-ENCRYPTED-1', 'SB-PREDICTION-ENCRYPTED-1'].includes(envelope.format) || envelope.inputs_sha256 !== EXPECTED.inputs_sha256 ||
+      envelope.gold_sha256 !== EXPECTED.gold_sha256) throw new Error('Wrong bundle');
+  if (phase === 'predictions' && envelope.prediction_sha256 !== PREDICTION_SHA) throw new Error('Wrong prediction snapshot');
+  const aesBytes = await crypto.subtle.decrypt({name: 'RSA-OAEP'}, identity.encryption.privateKey, bytes(envelope.wrapped_key));
+  const key = await crypto.subtle.importKey('raw', aesBytes, {name: 'AES-GCM'}, false, ['decrypt']);
+  const aad = encoder.encode((phase === 'predictions' ? 'SB-PREDICTION-1' : 'SB-REVIEW-1') + '\n' +
+    EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256 + (phase === 'predictions' ? '\n' + PREDICTION_SHA : ''));
+  const plaintext = await crypto.subtle.decrypt({name: 'AES-GCM', iv: bytes(envelope.nonce), additionalData: aad}, key, bytes(envelope.ciphertext));
+  const payload = JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(plaintext));
+  const checked = await validatePayload(payload);
+  const predictions = phase === 'predictions' ? await validatePredictions(payload, checked) : undefined;
+  const progressKey = phase === 'predictions' ? 'progress:predictions:' + PREDICTION_SHA : 'progress:gold:' + EXPECTED.inputs_sha256 + ':' + EXPECTED.gold_sha256;
+  const progress = await saved(progressKey);
+  state = {...checked, reviewer: identity.reviewer, records: [], demo: false, phase, predictions, progressKey, envelope};
+  if (progress && progress.inputs_sha256 === EXPECTED.inputs_sha256 && progress.gold_sha256 === EXPECTED.gold_sha256 &&
+      progress.reviewer === identity.reviewer && (phase !== 'predictions' || progress.prediction_sha256 === PREDICTION_SHA)) {
+    if (!Array.isArray(progress.records) || progress.records.length > checked.cases.length ||
+        progress.records.some((r, i) => r.id !== checked.cases[i].id)) throw new Error('Invalid saved progress');
+    state.records = progress.records;
+  }
+  await save('encrypted_bundle:V3-01:' + phase, envelope); // ciphertext only; decrypted source is not persisted
+  position = state.records.length; render(); message('Bundle decrypted and hashes verified on this device. Review each case yourself.');
+}
+function render() {
+  $('review').hidden = false;
+  $('review-title').textContent = state.demo ? 'Public demo — no private data' :
+    (state.phase === 'predictions' ? 'Independent prediction review' : 'Private gold review');
+  $('progress').textContent = Math.min(position + 1, state.cases.length) + ' / ' + state.cases.length;
+  $('finish').hidden = position !== state.cases.length || state.demo;
+  $('case').hidden = position === state.cases.length;
+  if (position >= state.cases.length) return;
+  const c = state.cases[position], g = state.gold.find(r => r.id === c.id);
+  $('question').textContent = c.question; $('source').textContent = c.source;
+  const predictionPhase = state.phase === 'predictions';
+  $('prediction').hidden = !predictionPhase; $('judgments').hidden = !predictionPhase;
+  $('save-prediction').hidden = !predictionPhase; $('gold-actions').hidden = predictionPhase;
+  $('gold-prompt').hidden = predictionPhase; $('gold-reference').hidden = predictionPhase;
+  if (predictionPhase) {
+    const p = state.predictions.find(row => row.id === c.id);
+    $('prediction-status').textContent = p.status;
+    $('prediction-quote').textContent = p.status === 'ANSWER' ? c.source.slice(p.start, p.end) : 'No answer or quotation emitted.';
+    $('judgments').replaceChildren();
+    for (const [field, prompt] of Object.entries(JUDGMENTS)) {
+      const set = document.createElement('fieldset'), legend = document.createElement('legend');
+      legend.textContent = prompt; set.appendChild(legend);
+      for (const [value, text] of [['true', 'Yes'], ['false', 'No']]) {
+        const label = document.createElement('label'), radio = document.createElement('input');
+        radio.type = 'radio'; radio.name = 'judge-' + field; radio.value = value;
+        label.append(radio, document.createTextNode(text)); set.appendChild(label);
+      }
+      $('judgments').appendChild(set);
+    }
+  }
+  $('expected').textContent = g.answerable ? 'Proposed ANSWER — approve every listed exact span: ' + g.expected_answers.map(a => JSON.stringify(a.text) + ' [' + a.start + ', ' + a.end + ')').join(' / ') : 'Proposed ABSTAIN';
+  $('rationale').textContent = g.author_rationale || '';
+  $('note').value = '';
+}
+async function record(approved) {
+  if (!state || position >= state.cases.length) return;
+  state.records.push({id: state.cases[position].id, approved, private_note: $('note').value.trim()});
+  if (!state.demo) await save(state.progressKey || 'progress', {reviewer: state.reviewer, ...EXPECTED, records: state.records});
+  position++; render(); message(state.demo ? 'Public demo choice saved in memory only.' : 'Saved on this phone. You can close the page and reopen the encrypted bundle later.');
+}
+async function recordPrediction() {
+  if (!state || state.phase !== 'predictions' || position >= state.cases.length) return;
+  const record = {id: state.cases[position].id, reviewer: state.reviewer, prediction_sha256: PREDICTION_SHA};
+  for (const field of Object.keys(JUDGMENTS)) {
+    const selected = document.querySelector('input[name="judge-' + field + '"]:checked');
+    if (!selected) { message('Choose Yes or No for each of the five checks before saving.'); return; }
+    record[field] = selected.value === 'true';
+  }
+  record.private_note = $('note').value.trim(); state.records.push(record);
+  if (!state.demo) await save(state.progressKey, {reviewer: state.reviewer, ...EXPECTED, prediction_sha256: PREDICTION_SHA, records: state.records});
+  position++; render(); message('Prediction judgments saved on this phone. Gold-review choices were kept separate.');
+}
+async function finish() {
+  if (!state || state.demo || state.records.length !== 200) throw new Error('Incomplete review');
+  identity = await saved('identity');
+  const phase = state.phase || 'gold';
+  const review = {draft_revision: 'V3-01', candidate_sha: '0f4166a4e38b9b0a6e03326e576ca9f13500c859', phase, reviewer: identity.reviewer, ...EXPECTED,
+    reviewed_at_utc: new Date().toISOString(), local_only_attestation: true,
+    identity_status: 'OWNER_PHONE_ATTESTATION_REQUIRES_AUTHENTICATED_PUBLIC_KEY_MAPPING', records: state.records};
+  if (phase === 'predictions') review.prediction_sha256 = PREDICTION_SHA;
+  const exact = JSON.stringify(review, null, 2) + '\n';
+  const signature = await crypto.subtle.sign({name: 'Ed25519'}, identity.signing.privateKey, encoder.encode(exact));
+  const publicKey = await crypto.subtle.exportKey('spki', identity.signing.publicKey);
+  const aesBytes = await crypto.subtle.decrypt({name: 'RSA-OAEP'}, identity.encryption.privateKey,
+    bytes(state.envelope.wrapped_key));
+  const key = await crypto.subtle.importKey('raw', aesBytes, {name: 'AES-GCM'}, false, ['encrypt']);
+  const nonce = crypto.getRandomValues(new Uint8Array(12));
+  const format = phase === 'predictions' ? 'SB-PREDICTION-RETURN-1' : 'SB-REVIEW-RETURN-1';
+  const aad = encoder.encode(format + '\n' + EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256 +
+    (phase === 'predictions' ? '\n' + PREDICTION_SHA : ''));
+  const payload = JSON.stringify({review_json: exact, signature: b64(signature), public_key_pem: pem(publicKey)});
+  const ciphertext = await crypto.subtle.encrypt({name: 'AES-GCM', iv: nonce, additionalData: aad}, key, encoder.encode(payload));
+  download(phase === 'predictions' ? 'encrypted-prediction-review.json' : 'encrypted-gold-review-v3-01.json', JSON.stringify({format, ...EXPECTED,
+    ...(phase === 'predictions' ? {prediction_sha256: PREDICTION_SHA} : {}),
+    nonce: b64(nonce), ciphertext: b64(ciphertext)}, null, 2) + '\n');
+  message('Encrypted signed review downloaded. Return only that encrypted file through the approved delivery channel. No model run starts here.');
+}
+function demo() {
+  state = {demo: true, reviewer: 'Public demo', records: [],
+    cases: [{id: 'PUBLIC_DEMO', question: 'Where is the sample key?', source: 'The sample key is in the blue drawer.'}],
+    gold: [{id: 'PUBLIC_DEMO', answerable: true, expected_answers: [{text: 'blue drawer'}],
+      author_rationale: 'Public example only. Confirm that the source establishes the requested fact.'}]};
+  position = 0; render(); message('This example is public and is never counted as evaluation evidence.');
+}
+$('create').addEventListener('click', guarded(createAccess));
+$('open').addEventListener('click', guarded(openBundle));
+$('yes').addEventListener('click', guarded(() => record(true)));
+$('no').addEventListener('click', guarded(() => record(false)));
+$('save-prediction').addEventListener('click', guarded(recordPrediction));
+$('finish').addEventListener('click', guarded(finish));
+$('demo').addEventListener('click', demo);
+// No service worker, fetch, XMLHttpRequest, WebSocket, beacon, external font or analytics.
+
+// Detect the existing device identity without generating or exporting new private keys.
+void guarded(async () => {
+  const existing = await saved('identity');
+  if (existing) {
+    identity = existing; $('reviewer').value = existing.reviewer;
+    message('Your existing phone identity is available. Fresh v3 gold needs independent review. R2 reviews and progress are preserved.');
+  }
+})();
+</script></body></html>

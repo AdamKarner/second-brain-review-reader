@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ziT4oyN53EKcuZMDKQ5v0bruPcQ436yNKvxjQwd7FKA='; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer"><title>Second Brain · Owner review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f1;color:#152b27;font:17px/1.55 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:24px 18px 64px}h1{font-size:30px;line-height:1.15}h2{font-size:22px}h3{font-size:17px;margin-bottom:6px}small,.muted{color:#55635f}section{padding:20px;background:white;border:1px solid #d9ded9;border-radius:16px;margin:18px 0}button{min-height:48px;font:inherit;border:0;border-radius:10px;padding:11px 16px;background:#174f44;color:white;margin:6px 0;cursor:pointer;width:100%}button.secondary{background:#e6efeb;color:#174f44}.actions{display:flex;gap:10px}.actions button:last-child{background:#74392c}input[type=text],textarea{width:100%;font:inherit;padding:12px;border:1px solid #a6b6af;border-radius:8px}input[type=file]{max-width:100%;margin:10px 0}label{display:block;margin:12px 0}input[type=checkbox]{width:22px;height:22px;vertical-align:middle;margin-right:8px}.source{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3ef;border-radius:10px;padding:16px}#message{padding:12px;border-left:3px solid #377762}#progress{font-variant-numeric:tabular-nums}details{margin:10px 0}footer{font-size:14px;color:#55635f}[hidden]{display:none!important}
+</style></head><body><main>
+<small>SECOND BRAIN · PRIVATE EVALUATION</small><h1>Review on your phone</h1>
+<p>The page contains no private cases. Your browser decrypts an approved bundle on your device. Private keys stay in this browser.</p>
+<button id="demo" class="secondary">Try a public sample</button>
+<section><h2>1. Request access</h2><label>Your reviewer name<input id="reviewer" type="text" autocomplete="name"></label>
+<label><input id="independent" type="checkbox">I am the owner and authorize myself as the independent human reviewer. I authored neither the candidate nor these cases.</label>
+<button id="create">Create public access request</button><p class="muted">Only the access request contains public keys. Send it to Codex when asked. Use the same browser for the encrypted bundle; clearing browser data removes your private keys.</p></section>
+<section><h2>2. Open encrypted bundle</h2><label>Select the approved encrypted file<input id="bundle" type="file" accept="application/json,.json"></label><button id="open">Decrypt on this phone</button></section>
+<p id="message" role="status" aria-live="polite">Public prototype. No hosting, private transfer or reviewer enrollment has been approved or performed.</p>
+<section id="review" hidden><small id="review-title"></small><h2 id="progress"></h2><div id="case"><h3>Question</h3><p id="question"></p><h3>Exact source</h3><div id="source" class="source"></div><h3>Author-proposed gold</h3><p id="expected"></p><details><summary>Author rationale — verify independently</summary><p id="rationale"></p></details><label>Private note<textarea id="note" rows="3"></textarea></label><p>Does the proposed answer or abstention follow from the exact source, entity, field, time and condition?</p><div class="actions"><button id="yes">Yes, accept</button><button id="no">No, reject</button></div></div><button id="finish" hidden>Sign and download encrypted review</button></section>
+<footer>Source version: phone-review-v1 · No external dependencies or network requests. Any rejected gold blocks inference. This reader does not execute models or authorize release.</footer>
+</main><script>'use strict';
+// Public client only. No private cases, network calls, telemetry or third-party code.
+const EXPECTED = Object.freeze({
+  inputs_sha256: '1d9ef0577397158389cbb5e546552b7a3dde6b53f95f297107cfccf65e8b3dfb',
+  gold_sha256: '89ab331cf4e00ff435097ee17eb7fc3b4c030d36e60a91ca8c3c228211b122a0'
+});
+const $ = id => document.getElementById(id);
+const encoder = new TextEncoder();
+const bytes = text => Uint8Array.from(atob(text), c => c.charCodeAt(0));
+const b64 = buffer => btoa(Array.from(new Uint8Array(buffer), b => String.fromCharCode(b)).join(''));
+const hex = buffer => Array.from(new Uint8Array(buffer), b => b.toString(16).padStart(2, '0')).join('');
+const sha = async text => hex(await crypto.subtle.digest('SHA-256', encoder.encode(text)));
+const pem = buffer => '-----BEGIN PUBLIC KEY-----\n' + b64(buffer).match(/.{1,64}/g).join('\n') + '\n-----END PUBLIC KEY-----\n';
+let identity, state, position = 0;
+
+async function db() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('second-brain-owner-review-v1', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('local');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(new Error('Local storage unavailable'));
+  });
+}
+async function saved(key) {
+  const connection = await db();
+  return new Promise((resolve, reject) => {
+    const tx = connection.transaction('local', 'readonly');
+    const request = tx.objectStore('local').get(key);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(new Error('Local read failed'));
+    tx.oncomplete = () => connection.close();
+  });
+}
+async function save(key, value) {
+  const connection = await db();
+  return new Promise((resolve, reject) => {
+    const tx = connection.transaction('local', 'readwrite');
+    tx.objectStore('local').put(value, key);
+    tx.oncomplete = () => { connection.close(); resolve(); };
+    tx.onerror = () => reject(new Error('Local save failed'));
+  });
+}
+function download(name, content, type = 'application/json') {
+  const url = URL.createObjectURL(new Blob([content], {type}));
+  const link = document.createElement('a'); link.href = url; link.download = name;
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+function message(text) { $('message').textContent = text; }
+function guarded(fn) {
+  return async () => {
+    try { await fn(); }
+    catch (_) { message('Stopped safely. Check the file, storage and browser support. No review was finalized.'); }
+  };
+}
+async function createAccess() {
+  if (!$('independent').checked || $('reviewer').value.trim().length < 2)
+    throw new Error('Reviewer declaration required');
+  const reviewer = $('reviewer').value.trim();
+  if (/^(atlas|claude|codex)$/i.test(reviewer)) throw new Error('Own human name required');
+  identity = await saved('identity');
+  if (identity && identity.reviewer !== reviewer) throw new Error('Existing reviewer identity differs');
+  if (!identity) {
+    const encryption = await crypto.subtle.generateKey({name: 'RSA-OAEP', modulusLength: 3072,
+      publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256'}, false, ['encrypt', 'decrypt']);
+    const signing = await crypto.subtle.generateKey({name: 'Ed25519'}, false, ['sign', 'verify']);
+    identity = {reviewer, encryption, signing, created_at_utc: new Date().toISOString()};
+    await save('identity', identity);
+  }
+  const encryptionSpki = await crypto.subtle.exportKey('spki', identity.encryption.publicKey);
+  const signingSpki = await crypto.subtle.exportKey('spki', identity.signing.publicKey);
+  download('review-access-request.json', JSON.stringify({format: 'SB-REVIEW-ACCESS-1',
+    reviewer: identity.reviewer, encryption_public_key_pem: pem(encryptionSpki),
+    review_public_key_pem: pem(signingSpki), expected_commitments: EXPECTED}, null, 2) + '\n');
+  message('Access request downloaded. It contains public keys only and can be sent to Codex. Keep using this browser; private keys stay on this phone.');
+}
+function index(rows) {
+  if (!Array.isArray(rows)) throw new Error('Expected array');
+  const map = new Map();
+  for (const row of rows) {
+    if (!row || typeof row.id !== 'string' || !row.id || map.has(row.id)) throw new Error('Invalid ID');
+    map.set(row.id, row);
+  }
+  return map;
+}
+async function validatePayload(payload, expected = EXPECTED) {
+  if (await sha(payload.inputs_json) !== expected.inputs_sha256 || await sha(payload.gold_json) !== expected.gold_sha256)
+    throw new Error('Commitments differ');
+  const cases = JSON.parse(payload.inputs_json), gold = index(JSON.parse(payload.gold_json));
+  const byId = index(cases);
+  if (cases.length !== 200 || gold.size !== 200 || cases.some(c => !gold.has(c.id))) throw new Error('Coverage mismatch');
+  let answerable = 0;
+  for (const c of cases) {
+    const g = gold.get(c.id);
+    if (typeof c.source !== 'string' || typeof c.question !== 'string' || typeof g.answerable !== 'boolean')
+      throw new Error('Invalid case');
+    answerable += Number(g.answerable);
+    if (!Array.isArray(g.expected_answers) || Boolean(g.expected_answers.length) !== g.answerable)
+      throw new Error('Gold shape differs');
+    for (const a of g.expected_answers) {
+      if (!Number.isInteger(a.start) || !Number.isInteger(a.end) || a.start < 0 || a.end <= a.start ||
+          a.end > c.source.length || c.source.slice(a.start, a.end) !== a.text)
+        throw new Error('Exact source span differs');
+    }
+  }
+  if (answerable !== 100) throw new Error('Balance differs');
+  return {cases, gold: Array.from(gold.values()), commitments: expected};
+}
+async function openBundle() {
+  identity = await saved('identity');
+  const file = $('bundle').files[0];
+  if (!identity || !file || file.size > 12000000) throw new Error('Key and bundle required');
+  const envelope = JSON.parse(await file.text());
+  if (envelope.format !== 'SB-REVIEW-ENCRYPTED-1' || envelope.inputs_sha256 !== EXPECTED.inputs_sha256 ||
+      envelope.gold_sha256 !== EXPECTED.gold_sha256) throw new Error('Wrong bundle');
+  const aesBytes = await crypto.subtle.decrypt({name: 'RSA-OAEP'}, identity.encryption.privateKey, bytes(envelope.wrapped_key));
+  const key = await crypto.subtle.importKey('raw', aesBytes, {name: 'AES-GCM'}, false, ['decrypt']);
+  const aad = encoder.encode('SB-REVIEW-1\n' + EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256);
+  const plaintext = await crypto.subtle.decrypt({name: 'AES-GCM', iv: bytes(envelope.nonce), additionalData: aad}, key, bytes(envelope.ciphertext));
+  const checked = await validatePayload(JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(plaintext)));
+  const progress = await saved('progress');
+  state = {...checked, reviewer: identity.reviewer, records: [], demo: false};
+  if (progress && progress.inputs_sha256 === EXPECTED.inputs_sha256 && progress.gold_sha256 === EXPECTED.gold_sha256 &&
+      progress.reviewer === identity.reviewer) state.records = progress.records;
+  await save('encrypted_bundle', envelope); // ciphertext only; decrypted source is not persisted
+  position = state.records.length; render(); message('Bundle decrypted and hashes verified on this device. Review each case yourself.');
+}
+function render() {
+  $('review').hidden = false;
+  $('review-title').textContent = state.demo ? 'Public demo — no private data' : 'Private gold review';
+  $('progress').textContent = Math.min(position + 1, state.cases.length) + ' / ' + state.cases.length;
+  $('finish').hidden = position !== state.cases.length || state.demo;
+  $('case').hidden = position === state.cases.length;
+  if (position >= state.cases.length) return;
+  const c = state.cases[position], g = state.gold.find(r => r.id === c.id);
+  $('question').textContent = c.question; $('source').textContent = c.source;
+  $('expected').textContent = g.answerable ? 'Proposed ANSWER: ' + g.expected_answers.map(a => a.text).join(' / ') : 'Proposed ABSTAIN';
+  $('rationale').textContent = g.author_rationale || '';
+  $('note').value = '';
+}
+async function record(approved) {
+  if (!state || position >= state.cases.length) return;
+  state.records.push({id: state.cases[position].id, approved, private_note: $('note').value.trim()});
+  if (!state.demo) await save('progress', {reviewer: state.reviewer, ...EXPECTED, records: state.records});
+  position++; render(); message(state.demo ? 'Public demo choice saved in memory only.' : 'Saved on this phone. You can close the page and reopen the encrypted bundle later.');
+}
+async function finish() {
+  if (!state || state.demo || state.records.length !== 200) throw new Error('Incomplete review');
+  identity = await saved('identity');
+  const review = {phase: 'gold', reviewer: identity.reviewer, ...EXPECTED,
+    reviewed_at_utc: new Date().toISOString(), local_only_attestation: true,
+    identity_status: 'OWNER_PHONE_ATTESTATION_REQUIRES_AUTHENTICATED_PUBLIC_KEY_MAPPING', records: state.records};
+  const exact = JSON.stringify(review, null, 2) + '\n';
+  const signature = await crypto.subtle.sign({name: 'Ed25519'}, identity.signing.privateKey, encoder.encode(exact));
+  const publicKey = await crypto.subtle.exportKey('spki', identity.signing.publicKey);
+  const aesBytes = await crypto.subtle.decrypt({name: 'RSA-OAEP'}, identity.encryption.privateKey,
+    bytes((await saved('encrypted_bundle')).wrapped_key));
+  const key = await crypto.subtle.importKey('raw', aesBytes, {name: 'AES-GCM'}, false, ['encrypt']);
+  const nonce = crypto.getRandomValues(new Uint8Array(12));
+  const aad = encoder.encode('SB-REVIEW-RETURN-1\n' + EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256);
+  const payload = JSON.stringify({review_json: exact, signature: b64(signature), public_key_pem: pem(publicKey)});
+  const ciphertext = await crypto.subtle.encrypt({name: 'AES-GCM', iv: nonce, additionalData: aad}, key, encoder.encode(payload));
+  download('encrypted-gold-review.json', JSON.stringify({format: 'SB-REVIEW-RETURN-1', ...EXPECTED,
+    nonce: b64(nonce), ciphertext: b64(ciphertext)}, null, 2) + '\n');
+  message('Encrypted signed review downloaded. Return only that encrypted file through the approved delivery channel. No model run starts here.');
+}
+function demo() {
+  state = {demo: true, reviewer: 'Public demo', records: [],
+    cases: [{id: 'PUBLIC_DEMO', question: 'Where is the sample key?', source: 'The sample key is in the blue drawer.'}],
+    gold: [{id: 'PUBLIC_DEMO', answerable: true, expected_answers: [{text: 'blue drawer'}],
+      author_rationale: 'Public example only. Confirm that the source establishes the requested fact.'}]};
+  position = 0; render(); message('This example is public and is never counted as evaluation evidence.');
+}
+$('create').addEventListener('click', guarded(createAccess));
+$('open').addEventListener('click', guarded(openBundle));
+$('yes').addEventListener('click', guarded(() => record(true)));
+$('no').addEventListener('click', guarded(() => record(false)));
+$('finish').addEventListener('click', guarded(finish));
+$('demo').addEventListener('click', demo);
+// No service worker, fetch, XMLHttpRequest, WebSocket, beacon, external font or analytics.
+</script></body></html>

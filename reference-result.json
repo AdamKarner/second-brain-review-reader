@@ -1,0 +1,50 @@
+{
+  "method": "APPROVED_PREINFERENCE_GOLD_REFERENCE_BENCHMARK",
+  "verification": "INDEPENDENT_NODE_AND_PYTHON_UTF16_RECOMPUTATION_AGREE",
+  "inputs_sha256": "3b2e5e82bc89dce65fc71e920cd282ef1d761243566b01b920069761974f0feb",
+  "gold_sha256": "00bcc27045eb4c8705674d1b4b5f56ddd03415e8c5c033a3827746762c329002",
+  "prediction_sha256": "88607d9f8739c78fa2231bdd80f1a4d80642660dea2c956895e715ebe9a20556",
+  "gold_review_sha256": "7516a9b9f1765eaea0b228f22ea0697fd28d2ec701c93bad65eccb8d961b7ca6",
+  "cases": 200,
+  "prior_gold_approvals": 200,
+  "new_manual_prediction_reviews_claimed": 0,
+  "exact_reference_matches": 141,
+  "exact_answer_spans": 52,
+  "correct_reference_abstentions": 89,
+  "wrong_answer_dispositions_against_gold": 11,
+  "missed_gold_answers": 15,
+  "unresolved_answer_span_variants": 33,
+  "strict_exact_reference_agreement": 0.705,
+  "best_case_reference_agreement_after_variants": 0.87,
+  "answerable_exact_span_coverage": 0.52,
+  "best_case_answerable_coverage_after_variants": 0.85,
+  "negative_reference_abstention": 0.89,
+  "reference_disposition_error_drivers": {
+    "missing-field": {
+      "ANSWER_WHERE_APPROVED_GOLD_REQUIRES_ABSTENTION": 10,
+      "pipeline:GATE_ANSWER": 10
+    },
+    "long-context": {
+      "MISSED_GOLD_ANSWER": 5,
+      "pipeline:INPUT_TOO_LONG": 5
+    },
+    "conflict": {
+      "MISSED_GOLD_ANSWER": 10,
+      "pipeline:ENTITY_SHIFT": 8,
+      "pipeline:SUPERSEDED": 2
+    },
+    "wrong-entity": {
+      "ANSWER_WHERE_APPROVED_GOLD_REQUIRES_ABSTENTION": 1,
+      "pipeline:GATE_ANSWER": 1
+    }
+  },
+  "reference_screen": "NO_GO_FOR_PROPOSED_ZERO_ERRONEOUS_NEGATIVE_ANSWER_CRITERION",
+  "decision_changes_if_all_variants_valid": false,
+  "factual_unsupported_claim_rate": "NOT_ESTABLISHED_NO_FRESH_CLAIM_LEVEL_ADJUDICATION",
+  "original_forge_reviewed_prediction_score": "NOT_RUN_NO_FABRICATED_FIVE_FIELD_REVIEWS",
+  "full_second_review_required_for_reference_no_go": false,
+  "remaining_variants_status": "OPTIONAL_ADJUDICATION_TO_REFINE_ANSWER_QUALITY_COUNTS",
+  "operational_probes": "NOT_RUN",
+  "release_activation_verdict": "NO_GO",
+  "scope": "Synthetic correlated engineering checks; not population/device evidence. Reference mismatches are not automatically false factual claims. No original result or gold changed; no model rerun."
+}

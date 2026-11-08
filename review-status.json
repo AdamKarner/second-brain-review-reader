@@ -1,0 +1,27 @@
+{
+  "draft_revision": "R2",
+  "gold_review": {
+    "status": "INDEPENDENT_OWNER_ACCEPTED_ALL_PROPOSED_LABELS",
+    "reviewed_cases": 200,
+    "approved": 200,
+    "rejected": 0,
+    "signed_review_sha256": "7516a9b9f1765eaea0b228f22ea0697fd28d2ec701c93bad65eccb8d961b7ca6"
+  },
+  "first_private_run": {
+    "status": "COMPLETE_PRESERVED_UNCHANGED",
+    "challenge_cases": 200,
+    "actual_model_cases": 190,
+    "over_window_skips": 10,
+    "answers": 96,
+    "abstentions": 104,
+    "normalized_predictions_sha256": "88607d9f8739c78fa2231bdd80f1a4d80642660dea2c956895e715ebe9a20556",
+    "counts_are_not_accuracy": true
+  },
+  "prediction_review": {
+    "status": "PENDING",
+    "ciphertext_sha256": "978403c021e397afa043ec7a92b25f3c874ba1db0097294e3ee8acb5be06b0f7",
+    "owner_approved_encrypted_delivery": true
+  },
+  "host_operational_probes": "NOT_RUN",
+  "quality_verdict": "PENDING_INDEPENDENT_PREDICTION_REVIEW"
+}

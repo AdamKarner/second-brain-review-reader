@@ -1,25 +1,33 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-THVvZAJ/+KMi1r81dVLjGNWCWMtR4xkuvPdhWSj9cEc='; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Zcp7jfELnHx13/FR+iOS82k41acqYyTK91pb2CTUD2k='; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer"><title>Second Brain · Owner review</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f5f5f1;color:#152b27;font:17px/1.55 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:24px 18px 64px}h1{font-size:30px;line-height:1.15}h2{font-size:22px}h3{font-size:17px;margin-bottom:6px}small,.muted{color:#55635f}section{padding:20px;background:white;border:1px solid #d9ded9;border-radius:16px;margin:18px 0}button{min-height:48px;font:inherit;border:0;border-radius:10px;padding:11px 16px;background:#174f44;color:white;margin:6px 0;cursor:pointer;width:100%}button.secondary{background:#e6efeb;color:#174f44}.download{display:block;text-align:center;text-decoration:none;min-height:48px;padding:12px 16px;background:#174f44;color:#fff;border-radius:10px;margin:12px 0}.actions{display:flex;gap:10px}.actions button:last-child{background:#74392c}input[type=text],textarea{width:100%;font:inherit;padding:12px;border:1px solid #a6b6af;border-radius:8px}input[type=file]{max-width:100%;margin:10px 0}label{display:block;margin:12px 0}input[type=checkbox]{width:22px;height:22px;vertical-align:middle;margin-right:8px}.source{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3ef;border-radius:10px;padding:16px}#message{padding:12px;border-left:3px solid #377762}#progress{font-variant-numeric:tabular-nums}details{margin:10px 0}footer{font-size:14px;color:#55635f}[hidden]{display:none!important}
+*{box-sizing:border-box}body{margin:0;background:#f5f5f1;color:#152b27;font:17px/1.55 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:24px 18px 64px}h1{font-size:30px;line-height:1.15}h2{font-size:22px}h3{font-size:17px;margin-bottom:6px}small,.muted{color:#55635f}section{padding:20px;background:white;border:1px solid #d9ded9;border-radius:16px;margin:18px 0}button{min-height:48px;font:inherit;border:0;border-radius:10px;padding:11px 16px;background:#174f44;color:white;margin:6px 0;cursor:pointer;width:100%}button.secondary{background:#e6efeb;color:#174f44}.download{display:block;text-align:center;text-decoration:none;min-height:48px;padding:12px 16px;background:#174f44;color:#fff;border-radius:10px;margin:12px 0}.actions{display:flex;gap:10px}.actions button:last-child{background:#74392c}input[type=text],textarea{width:100%;font:inherit;padding:12px;border:1px solid #a6b6af;border-radius:8px}input[type=file]{max-width:100%;margin:10px 0}label{display:block;margin:12px 0}fieldset{min-width:0;border:1px solid #b6c9bf;border-radius:10px;padding:12px;margin:14px 0}legend{font-size:16px;padding:0 5px}fieldset label{display:inline-flex;align-items:center;justify-content:center;width:46%;min-height:48px;border:1px solid #a6b6af;border-radius:8px;margin:5px 2%;gap:8px}fieldset label:has(input:checked){background:#dceee4}input[type=radio]{width:22px;height:22px}input[type=checkbox]{width:22px;height:22px;vertical-align:middle;margin-right:8px}.source{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3ef;border-radius:10px;padding:16px}#message{padding:12px;border-left:3px solid #377762}#progress{font-variant-numeric:tabular-nums}details{margin:10px 0}footer{font-size:14px;color:#55635f}[hidden]{display:none!important}
 </style></head><body><main>
-<small>SECOND BRAIN · PRIVATE EVALUATION</small><h1>Review on your phone</h1><p><strong>Draft R2 · Gold not yet reviewed</strong></p>
+<small>SECOND BRAIN · PRIVATE EVALUATION</small><h1>Review on your phone</h1><p><strong>Draft R2 · Gold accepted · Prediction review pending</strong></p>
 <p>The page contains no private cases. Your browser decrypts an approved bundle on your device. Private keys stay in this browser.</p>
 <button id="demo" class="secondary">Try a public sample</button>
 <section><h2>1. Request access</h2><label>Your reviewer name<input id="reviewer" type="text" autocomplete="name"></label>
 <label><input id="independent" type="checkbox">I am the owner and authorize myself as the independent human reviewer. I authored neither the candidate nor these cases.</label>
 <button id="create">Create public access request</button><p class="muted">Only the access request contains public keys. Send it to Codex when asked. Use the same browser for the encrypted bundle; clearing browser data removes your private keys.</p></section>
-<section><h2>2. Open encrypted bundle</h2><a id="download-bundle" class="download" href="bundles/review-bundle-r2.encrypted.json" download="review-bundle-r2.encrypted.json">Download encrypted R2 bundle</a><p class="muted">Save the file, select it below, then decrypt. Use the same browser that created your phone key.</p><label>Select the approved encrypted file<input id="bundle" type="file" accept="application/json,.json"></label><button id="open">Decrypt on this phone</button></section>
-<p id="message" role="status" aria-live="polite">Encrypted Draft R2 is available. If you already created your phone key, download the bundle and select it above.</p>
-<section id="review" hidden><small id="review-title"></small><h2 id="progress"></h2><div id="case"><h3>Question</h3><p id="question"></p><h3>Exact source</h3><div id="source" class="source"></div><h3>Author-proposed gold</h3><p id="expected"></p><details><summary>Author rationale — verify independently</summary><p id="rationale"></p></details><label>Private note<textarea id="note" rows="3"></textarea></label><p>Does the proposed answer or abstention follow from the exact source, entity, field, time and condition?</p><div class="actions"><button id="yes">Yes, accept</button><button id="no">No, reject</button></div></div><button id="finish" hidden>Sign and download encrypted review</button></section>
-<footer>Source version: phone-review-v2 · No external dependencies or network requests. Any rejected gold blocks inference. This reader does not execute models or authorize release.</footer>
+<section><h2>2. Review the actual predictions</h2><p>Your gold review was accepted. This is a separate check of the frozen model decisions.</p><a id="download-prediction-bundle" class="download" href="bundles/prediction-bundle-r2.encrypted.json" download="prediction-bundle-r2.encrypted.json">Download prediction review bundle</a><p class="muted">The earlier gold bundle remains available for your records:</p><a id="download-bundle" class="download secondary" href="bundles/review-bundle-r2.encrypted.json" download="review-bundle-r2.encrypted.json">Download encrypted R2 bundle</a><p class="muted">Save the file, select it below, then decrypt. Use the same browser that created your phone key.</p><label>Select the approved encrypted file<input id="bundle" type="file" accept="application/json,.json"></label><button id="open">Decrypt on this phone</button></section>
+<p id="message" role="status" aria-live="polite">Gold review is complete. Download the prediction review bundle, select the saved file, and decrypt in the same browser.</p>
+<section id="review" hidden><small id="review-title"></small><h2 id="progress"></h2><div id="case"><h3>Question</h3><p id="question"></p><h3>Exact source</h3><div id="source" class="source"></div><div id="prediction" hidden><h3>Actual system decision</h3><strong id="prediction-status"></strong><p id="prediction-quote" class="source"></p><p class="muted">Compare this decision with the question and exact source. Make each judgment yourself.</p></div><div id="gold-reference"><h3>Author-proposed gold</h3><p id="expected"></p><details><summary>Author rationale — verify independently</summary><p id="rationale"></p></details></div><div id="judgments" hidden></div><label>Private note<textarea id="note" rows="3"></textarea></label><p id="gold-prompt">Does the proposed answer or abstention follow from the exact source, entity, field, time and condition?</p><div id="gold-actions" class="actions"><button id="yes">Yes, accept</button><button id="no">No, reject</button></div><button id="save-prediction" hidden>Save judgments and next</button></div><button id="finish" hidden>Sign and download encrypted review</button></section>
+<footer>Source version: phone-review-v3 · No external dependencies or network requests. Any rejected gold blocks inference. This reader does not execute models or authorize release.</footer>
 </main><script>'use strict';
 // Public client only. No private cases, network calls, telemetry or third-party code.
 const EXPECTED = Object.freeze({
   inputs_sha256: '3b2e5e82bc89dce65fc71e920cd282ef1d761243566b01b920069761974f0feb',
   gold_sha256: '00bcc27045eb4c8705674d1b4b5f56ddd03415e8c5c033a3827746762c329002'
+});
+const PREDICTION_SHA = '88607d9f8739c78fa2231bdd80f1a4d80642660dea2c956895e715ebe9a20556';
+const JUDGMENTS = Object.freeze({
+  supported: 'Support: the emitted answer follows from the source; for ABSTAIN, no unsupported factual answer was emitted.',
+  disposition_valid: 'Decision: ANSWER or ABSTAIN is appropriate for this question and source.',
+  source_fresh: 'Time: no outdated or unverified information is presented as a current fact.',
+  scope_valid: 'Scope: no answer is given for the wrong person, item, field or condition.',
+  evidence_span_checked: 'Evidence: I checked the exact quotation against the source, or confirmed that ABSTAIN emitted no quotation.'
 });
 const $ = id => document.getElementById(id);
 const encoder = new TextEncoder();
@@ -123,34 +131,81 @@ async function validatePayload(payload, expected = EXPECTED) {
   if (answerable !== 100) throw new Error('Balance differs');
   return {cases, gold: Array.from(gold.values()), commitments: expected};
 }
+async function validatePredictions(payload, checked, predictionSha = PREDICTION_SHA) {
+  if (await sha(payload.predictions_json) !== predictionSha) throw new Error('Prediction digest differs');
+  const predictions = JSON.parse(payload.predictions_json), mapped = index(predictions);
+  if (mapped.size !== checked.cases.length) throw new Error('Prediction coverage differs');
+  for (const c of checked.cases) {
+    const p = mapped.get(c.id);
+    if (!p || !['ANSWER', 'ABSTAIN'].includes(p.status)) throw new Error('Invalid prediction');
+    if (p.status === 'ANSWER') {
+      if (p.source_id !== c.source_id || !Number.isInteger(p.start) || !Number.isInteger(p.end) ||
+          p.start < 0 || p.end <= p.start || p.end > c.source.length) throw new Error('Invalid source span');
+      if (await sha(c.source) !== p.source_sha256 || await sha(c.source.slice(p.start, p.end)) !== p.quotation_sha256)
+        throw new Error('Prediction source binding differs');
+    }
+  }
+  return predictions;
+}
 async function openBundle() {
   identity = await saved('identity');
   const file = $('bundle').files[0];
   if (!identity || !file || file.size > 12000000) throw new Error('Key and bundle required');
   const envelope = JSON.parse(await file.text());
-  if (envelope.format !== 'SB-REVIEW-ENCRYPTED-1' || envelope.inputs_sha256 !== EXPECTED.inputs_sha256 ||
+  const phase = envelope.format === 'SB-PREDICTION-ENCRYPTED-1' ? 'predictions' : 'gold';
+  if (!['SB-REVIEW-ENCRYPTED-1', 'SB-PREDICTION-ENCRYPTED-1'].includes(envelope.format) || envelope.inputs_sha256 !== EXPECTED.inputs_sha256 ||
       envelope.gold_sha256 !== EXPECTED.gold_sha256) throw new Error('Wrong bundle');
+  if (phase === 'predictions' && envelope.prediction_sha256 !== PREDICTION_SHA) throw new Error('Wrong prediction snapshot');
   const aesBytes = await crypto.subtle.decrypt({name: 'RSA-OAEP'}, identity.encryption.privateKey, bytes(envelope.wrapped_key));
   const key = await crypto.subtle.importKey('raw', aesBytes, {name: 'AES-GCM'}, false, ['decrypt']);
-  const aad = encoder.encode('SB-REVIEW-1\n' + EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256);
+  const aad = encoder.encode((phase === 'predictions' ? 'SB-PREDICTION-1' : 'SB-REVIEW-1') + '\n' +
+    EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256 + (phase === 'predictions' ? '\n' + PREDICTION_SHA : ''));
   const plaintext = await crypto.subtle.decrypt({name: 'AES-GCM', iv: bytes(envelope.nonce), additionalData: aad}, key, bytes(envelope.ciphertext));
-  const checked = await validatePayload(JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(plaintext)));
-  const progress = await saved('progress');
-  state = {...checked, reviewer: identity.reviewer, records: [], demo: false};
+  const payload = JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(plaintext));
+  const checked = await validatePayload(payload);
+  const predictions = phase === 'predictions' ? await validatePredictions(payload, checked) : undefined;
+  const progressKey = phase === 'predictions' ? 'progress:predictions:' + PREDICTION_SHA : 'progress';
+  const progress = await saved(progressKey);
+  state = {...checked, reviewer: identity.reviewer, records: [], demo: false, phase, predictions, progressKey, envelope};
   if (progress && progress.inputs_sha256 === EXPECTED.inputs_sha256 && progress.gold_sha256 === EXPECTED.gold_sha256 &&
-      progress.reviewer === identity.reviewer) state.records = progress.records;
-  await save('encrypted_bundle', envelope); // ciphertext only; decrypted source is not persisted
+      progress.reviewer === identity.reviewer && (phase !== 'predictions' || progress.prediction_sha256 === PREDICTION_SHA)) {
+    if (!Array.isArray(progress.records) || progress.records.length > checked.cases.length ||
+        progress.records.some((r, i) => r.id !== checked.cases[i].id)) throw new Error('Invalid saved progress');
+    state.records = progress.records;
+  }
+  await save('encrypted_bundle:' + phase, envelope); // ciphertext only; decrypted source is not persisted
   position = state.records.length; render(); message('Bundle decrypted and hashes verified on this device. Review each case yourself.');
 }
 function render() {
   $('review').hidden = false;
-  $('review-title').textContent = state.demo ? 'Public demo — no private data' : 'Private gold review';
+  $('review-title').textContent = state.demo ? 'Public demo — no private data' :
+    (state.phase === 'predictions' ? 'Independent prediction review' : 'Private gold review');
   $('progress').textContent = Math.min(position + 1, state.cases.length) + ' / ' + state.cases.length;
   $('finish').hidden = position !== state.cases.length || state.demo;
   $('case').hidden = position === state.cases.length;
   if (position >= state.cases.length) return;
   const c = state.cases[position], g = state.gold.find(r => r.id === c.id);
   $('question').textContent = c.question; $('source').textContent = c.source;
+  const predictionPhase = state.phase === 'predictions';
+  $('prediction').hidden = !predictionPhase; $('judgments').hidden = !predictionPhase;
+  $('save-prediction').hidden = !predictionPhase; $('gold-actions').hidden = predictionPhase;
+  $('gold-prompt').hidden = predictionPhase; $('gold-reference').hidden = predictionPhase;
+  if (predictionPhase) {
+    const p = state.predictions.find(row => row.id === c.id);
+    $('prediction-status').textContent = p.status;
+    $('prediction-quote').textContent = p.status === 'ANSWER' ? c.source.slice(p.start, p.end) : 'No answer or quotation emitted.';
+    $('judgments').replaceChildren();
+    for (const [field, prompt] of Object.entries(JUDGMENTS)) {
+      const set = document.createElement('fieldset'), legend = document.createElement('legend');
+      legend.textContent = prompt; set.appendChild(legend);
+      for (const [value, text] of [['true', 'Yes'], ['false', 'No']]) {
+        const label = document.createElement('label'), radio = document.createElement('input');
+        radio.type = 'radio'; radio.name = 'judge-' + field; radio.value = value;
+        label.append(radio, document.createTextNode(text)); set.appendChild(label);
+      }
+      $('judgments').appendChild(set);
+    }
+  }
   $('expected').textContent = g.answerable ? 'Proposed ANSWER: ' + g.expected_answers.map(a => a.text).join(' / ') : 'Proposed ABSTAIN';
   $('rationale').textContent = g.author_rationale || '';
   $('note').value = '';
@@ -158,26 +213,43 @@ function render() {
 async function record(approved) {
   if (!state || position >= state.cases.length) return;
   state.records.push({id: state.cases[position].id, approved, private_note: $('note').value.trim()});
-  if (!state.demo) await save('progress', {reviewer: state.reviewer, ...EXPECTED, records: state.records});
+  if (!state.demo) await save(state.progressKey || 'progress', {reviewer: state.reviewer, ...EXPECTED, records: state.records});
   position++; render(); message(state.demo ? 'Public demo choice saved in memory only.' : 'Saved on this phone. You can close the page and reopen the encrypted bundle later.');
+}
+async function recordPrediction() {
+  if (!state || state.phase !== 'predictions' || position >= state.cases.length) return;
+  const record = {id: state.cases[position].id, reviewer: state.reviewer, prediction_sha256: PREDICTION_SHA};
+  for (const field of Object.keys(JUDGMENTS)) {
+    const selected = document.querySelector('input[name="judge-' + field + '"]:checked');
+    if (!selected) { message('Choose Yes or No for each of the five checks before saving.'); return; }
+    record[field] = selected.value === 'true';
+  }
+  record.private_note = $('note').value.trim(); state.records.push(record);
+  if (!state.demo) await save(state.progressKey, {reviewer: state.reviewer, ...EXPECTED, prediction_sha256: PREDICTION_SHA, records: state.records});
+  position++; render(); message('Prediction judgments saved on this phone. Gold-review choices were kept separate.');
 }
 async function finish() {
   if (!state || state.demo || state.records.length !== 200) throw new Error('Incomplete review');
   identity = await saved('identity');
-  const review = {draft_revision: 'R2', phase: 'gold', reviewer: identity.reviewer, ...EXPECTED,
+  const phase = state.phase || 'gold';
+  const review = {draft_revision: 'R2', phase, reviewer: identity.reviewer, ...EXPECTED,
     reviewed_at_utc: new Date().toISOString(), local_only_attestation: true,
     identity_status: 'OWNER_PHONE_ATTESTATION_REQUIRES_AUTHENTICATED_PUBLIC_KEY_MAPPING', records: state.records};
+  if (phase === 'predictions') review.prediction_sha256 = PREDICTION_SHA;
   const exact = JSON.stringify(review, null, 2) + '\n';
   const signature = await crypto.subtle.sign({name: 'Ed25519'}, identity.signing.privateKey, encoder.encode(exact));
   const publicKey = await crypto.subtle.exportKey('spki', identity.signing.publicKey);
   const aesBytes = await crypto.subtle.decrypt({name: 'RSA-OAEP'}, identity.encryption.privateKey,
-    bytes((await saved('encrypted_bundle')).wrapped_key));
+    bytes(state.envelope.wrapped_key));
   const key = await crypto.subtle.importKey('raw', aesBytes, {name: 'AES-GCM'}, false, ['encrypt']);
   const nonce = crypto.getRandomValues(new Uint8Array(12));
-  const aad = encoder.encode('SB-REVIEW-RETURN-1\n' + EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256);
+  const format = phase === 'predictions' ? 'SB-PREDICTION-RETURN-1' : 'SB-REVIEW-RETURN-1';
+  const aad = encoder.encode(format + '\n' + EXPECTED.inputs_sha256 + '\n' + EXPECTED.gold_sha256 +
+    (phase === 'predictions' ? '\n' + PREDICTION_SHA : ''));
   const payload = JSON.stringify({review_json: exact, signature: b64(signature), public_key_pem: pem(publicKey)});
   const ciphertext = await crypto.subtle.encrypt({name: 'AES-GCM', iv: nonce, additionalData: aad}, key, encoder.encode(payload));
-  download('encrypted-gold-review.json', JSON.stringify({format: 'SB-REVIEW-RETURN-1', ...EXPECTED,
+  download(phase === 'predictions' ? 'encrypted-prediction-review.json' : 'encrypted-gold-review.json', JSON.stringify({format, ...EXPECTED,
+    ...(phase === 'predictions' ? {prediction_sha256: PREDICTION_SHA} : {}),
     nonce: b64(nonce), ciphertext: b64(ciphertext)}, null, 2) + '\n');
   message('Encrypted signed review downloaded. Return only that encrypted file through the approved delivery channel. No model run starts here.');
 }
@@ -192,6 +264,7 @@ $('create').addEventListener('click', guarded(createAccess));
 $('open').addEventListener('click', guarded(openBundle));
 $('yes').addEventListener('click', guarded(() => record(true)));
 $('no').addEventListener('click', guarded(() => record(false)));
+$('save-prediction').addEventListener('click', guarded(recordPrediction));
 $('finish').addEventListener('click', guarded(finish));
 $('demo').addEventListener('click', demo);
 // No service worker, fetch, XMLHttpRequest, WebSocket, beacon, external font or analytics.
@@ -201,7 +274,7 @@ void guarded(async () => {
   const existing = await saved('identity');
   if (existing) {
     identity = existing; $('reviewer').value = existing.reviewer;
-    message('Your phone key is already set up. No new key request is needed. Download the encrypted R2 bundle, select the saved file, and tap Decrypt.');
+    message('Your phone key is already set up. Gold review is accepted. Download the prediction review bundle, select it, and tap Decrypt.');
   }
 })();
 </script></body></html>

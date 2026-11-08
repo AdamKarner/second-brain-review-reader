@@ -1,0 +1,68 @@
+{
+  "draft_revision": "R2",
+  "status": "AUTHOR_DRAFT_FROZEN_NOT_INDEPENDENTLY_REVIEWED",
+  "inputs_sha256": "3b2e5e82bc89dce65fc71e920cd282ef1d761243566b01b920069761974f0feb",
+  "gold_sha256": "00bcc27045eb4c8705674d1b4b5f56ddd03415e8c5c033a3827746762c329002",
+  "cases": 200,
+  "answerable": 100,
+  "unanswerable": 100,
+  "categories": {
+    "Unicode": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "conditional": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "conflict": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "long-context": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "missing-field": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "negation": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "ordinary": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "temporal": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "untrusted-attribution": {
+      "answerable": 10,
+      "unanswerable": 10
+    },
+    "wrong-entity": {
+      "answerable": 10,
+      "unanswerable": 10
+    }
+  },
+  "integrity": {
+    "unique_case_ids": 200,
+    "unique_source_ids": 200,
+    "unique_question_source_pairs": 200,
+    "distinct_source_texts": 190,
+    "repeated_source_text_rows_beyond_first": 10
+  },
+  "prior_draft": {
+    "status": "UNAVAILABLE_IN_CURRENT_VENUE_NO_PRIVATE_INFERENCE_RECORDED",
+    "inputs_sha256": "1d9ef0577397158389cbb5e546552b7a3dde6b53f95f297107cfccf65e8b3dfb",
+    "gold_sha256": "89ab331cf4e00ff435097ee17eb7fc3b4c030d36e60a91ca8c3c228211b122a0"
+  },
+  "historical_or_original_case_files_reused": false,
+  "population_evidence": "correlated synthetic engineering checks, not IID",
+  "gold_semantic_review": "NOT_REVIEWED",
+  "private_v2_inference": "NOT_RUN",
+  "host_operational_probes": "NOT_RUN"
+}

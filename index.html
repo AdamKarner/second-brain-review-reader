@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ziT4oyN53EKcuZMDKQ5v0bruPcQ436yNKvxjQwd7FKA='; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ugoWQ4SuS+yEYHNo31J+8Fr/mZoVX0iqfz6dAbyW2V8='; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer"><title>Second Brain · Owner review</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f5f5f1;color:#152b27;font:17px/1.55 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:24px 18px 64px}h1{font-size:30px;line-height:1.15}h2{font-size:22px}h3{font-size:17px;margin-bottom:6px}small,.muted{color:#55635f}section{padding:20px;background:white;border:1px solid #d9ded9;border-radius:16px;margin:18px 0}button{min-height:48px;font:inherit;border:0;border-radius:10px;padding:11px 16px;background:#174f44;color:white;margin:6px 0;cursor:pointer;width:100%}button.secondary{background:#e6efeb;color:#174f44}.actions{display:flex;gap:10px}.actions button:last-child{background:#74392c}input[type=text],textarea{width:100%;font:inherit;padding:12px;border:1px solid #a6b6af;border-radius:8px}input[type=file]{max-width:100%;margin:10px 0}label{display:block;margin:12px 0}input[type=checkbox]{width:22px;height:22px;vertical-align:middle;margin-right:8px}.source{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3ef;border-radius:10px;padding:16px}#message{padding:12px;border-left:3px solid #377762}#progress{font-variant-numeric:tabular-nums}details{margin:10px 0}footer{font-size:14px;color:#55635f}[hidden]{display:none!important}
 </style></head><body><main>
-<small>SECOND BRAIN · PRIVATE EVALUATION</small><h1>Review on your phone</h1>
+<small>SECOND BRAIN · PRIVATE EVALUATION</small><h1>Review on your phone</h1><p><strong>Draft R2 · Gold not yet reviewed</strong></p>
 <p>The page contains no private cases. Your browser decrypts an approved bundle on your device. Private keys stay in this browser.</p>
 <button id="demo" class="secondary">Try a public sample</button>
 <section><h2>1. Request access</h2><label>Your reviewer name<input id="reviewer" type="text" autocomplete="name"></label>
@@ -14,12 +14,12 @@
 <section><h2>2. Open encrypted bundle</h2><label>Select the approved encrypted file<input id="bundle" type="file" accept="application/json,.json"></label><button id="open">Decrypt on this phone</button></section>
 <p id="message" role="status" aria-live="polite">No review bundle loaded. Try the public sample, then create an access request.</p>
 <section id="review" hidden><small id="review-title"></small><h2 id="progress"></h2><div id="case"><h3>Question</h3><p id="question"></p><h3>Exact source</h3><div id="source" class="source"></div><h3>Author-proposed gold</h3><p id="expected"></p><details><summary>Author rationale — verify independently</summary><p id="rationale"></p></details><label>Private note<textarea id="note" rows="3"></textarea></label><p>Does the proposed answer or abstention follow from the exact source, entity, field, time and condition?</p><div class="actions"><button id="yes">Yes, accept</button><button id="no">No, reject</button></div></div><button id="finish" hidden>Sign and download encrypted review</button></section>
-<footer>Source version: phone-review-v1 · No external dependencies or network requests. Any rejected gold blocks inference. This reader does not execute models or authorize release.</footer>
+<footer>Source version: phone-review-v2 · No external dependencies or network requests. Any rejected gold blocks inference. This reader does not execute models or authorize release.</footer>
 </main><script>'use strict';
 // Public client only. No private cases, network calls, telemetry or third-party code.
 const EXPECTED = Object.freeze({
-  inputs_sha256: '1d9ef0577397158389cbb5e546552b7a3dde6b53f95f297107cfccf65e8b3dfb',
-  gold_sha256: '89ab331cf4e00ff435097ee17eb7fc3b4c030d36e60a91ca8c3c228211b122a0'
+  inputs_sha256: '3b2e5e82bc89dce65fc71e920cd282ef1d761243566b01b920069761974f0feb',
+  gold_sha256: '00bcc27045eb4c8705674d1b4b5f56ddd03415e8c5c033a3827746762c329002'
 });
 const $ = id => document.getElementById(id);
 const encoder = new TextEncoder();
@@ -164,7 +164,7 @@ async function record(approved) {
 async function finish() {
   if (!state || state.demo || state.records.length !== 200) throw new Error('Incomplete review');
   identity = await saved('identity');
-  const review = {phase: 'gold', reviewer: identity.reviewer, ...EXPECTED,
+  const review = {draft_revision: 'R2', phase: 'gold', reviewer: identity.reviewer, ...EXPECTED,
     reviewed_at_utc: new Date().toISOString(), local_only_attestation: true,
     identity_status: 'OWNER_PHONE_ATTESTATION_REQUIRES_AUTHENTICATED_PUBLIC_KEY_MAPPING', records: state.records};
   const exact = JSON.stringify(review, null, 2) + '\n';
@@ -195,4 +195,13 @@ $('no').addEventListener('click', guarded(() => record(false)));
 $('finish').addEventListener('click', guarded(finish));
 $('demo').addEventListener('click', demo);
 // No service worker, fetch, XMLHttpRequest, WebSocket, beacon, external font or analytics.
+
+// Detect the existing device identity without generating or exporting new private keys.
+void guarded(async () => {
+  const existing = await saved('identity');
+  if (existing) {
+    identity = existing; $('reviewer').value = existing.reviewer;
+    message('Your phone key is already set up. No new key request is needed. Waiting for the approved Draft R2 bundle.');
+  }
+})();
 </script></body></html>

@@ -1,0 +1,15 @@
+{
+  "current_draft": "R2",
+  "current": {
+    "inputs_sha256": "3b2e5e82bc89dce65fc71e920cd282ef1d761243566b01b920069761974f0feb",
+    "gold_sha256": "00bcc27045eb4c8705674d1b4b5f56ddd03415e8c5c033a3827746762c329002"
+  },
+  "prior_draft": {
+    "status": "UNAVAILABLE_IN_CURRENT_VENUE_NO_PRIVATE_INFERENCE_RECORDED",
+    "inputs_sha256": "1d9ef0577397158389cbb5e546552b7a3dde6b53f95f297107cfccf65e8b3dfb",
+    "gold_sha256": "89ab331cf4e00ff435097ee17eb7fc3b4c030d36e60a91ca8c3c228211b122a0"
+  },
+  "gold_review_status": "NOT_REVIEWED",
+  "private_v2_inference": "NOT_RUN",
+  "original_draft_not_recreated": true
+}
